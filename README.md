@@ -1,2 +1,0 @@
-# cp-algorithms
-cp-algorithms
