@@ -25,7 +25,7 @@ class SegmentTree:
 
     def query(self, left, right):
         # Range sum query from left to right
-        # here right is excluded from query so actually query is from left to right - 1 
+        # here right is excluded from query so actually query is from left to right - 1
         left += self.n
         right += self.n
         result = 0
