@@ -53,3 +53,16 @@ def sieve_of_eratosthenes(limit):
         p += 1
     primes = [p for p in range(2, limit + 1) if is_prime[p]]
     return primes
+
+
+def count_prime_squares_in_range(l, r):
+    limit = int(r ** 0.5)
+    primes = sieve_of_eratosthenes(limit)
+    prime_squares = set([p * p for p in primes])
+
+    count = 0
+    for square in prime_squares:
+        if l <= square <= r:
+            count += 1
+
+    return count
