@@ -66,3 +66,21 @@ def count_prime_squares_in_range(l, r):
             count += 1
 
     return count
+
+
+def all_factors(num):
+    """
+    # Example usage
+    num = 36
+    print(all_factors(num))  # Output: [1, 2, 3, 4, 6, 9, 12, 18, 36]
+    """
+    factors = []
+    
+    # Check for each number from 1 to sqrt(num)
+    for i in range(1, int(num**0.5) + 1):
+        if num % i == 0:
+            factors.append(i)
+            if i != num // i:  # Avoid adding the square root twice
+                factors.append(num // i)
+    
+    return sorted(factors)
