@@ -119,3 +119,22 @@ def shortest_path_matrix(graph, start, goal):
 # print(f"Shortest path from {start_node} to {goal_node}: {path} with total cost {cost}")
 
 
+
+
+def bellman_ford(graph, V, source):
+    # Step 1: Initialize distances from source to all vertices as infinity
+    # Distance to source is 0
+    dist = [float('inf')] * V
+    dist[source] = 0
+
+    # Step 2: Relax all edges V-1 times
+    for _ in range(V-1):
+        for u, v, w in graph:  # u is source, v is destination, w is weight
+            if dist[u] != float('inf') and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+
+    # Step 3: Check for negative-weight cycles
+    for u, v, w in graph:
+        if dist[u] != float('inf') and dist[u] + w < dist[v]:
+            print("Graph contains negative weight cycle")
+            return
