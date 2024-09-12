@@ -138,3 +138,41 @@ def bellman_ford(graph, V, source):
         if dist[u] != float('inf') and dist[u] + w < dist[v]:
             print("Graph contains negative weight cycle")
             return
+
+
+########## Floyd Warshall #####################
+
+
+def floyd_warshall(graph):
+    V = len(graph)
+    dist = [row[:] for row in graph]  # Create a copy of the graph
+
+    # Initialize the distance matrix
+    for i in range(V):
+        for j in range(V):
+            if i != j and dist[i][j] == 0:
+                dist[i][j] = float('inf')
+
+    # Main algorithm
+    for k in range(V):
+        for i in range(V):
+            for j in range(V):
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+
+    return dist
+
+
+# Example usage
+# graph = [
+#     [0, 5, float('inf'), 10],
+#     [float('inf'), 0, 3, float('inf')],
+#     [float('inf'), float('inf'), 0, 1],
+#     [float('inf'), float('inf'), float('inf'), 0]
+# ]
+#
+# result = floyd_warshall(graph)
+# for row in result:
+#     print(row)
+
+
+########## ----------------------- #####################
