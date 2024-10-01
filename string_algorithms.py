@@ -1,5 +1,6 @@
 import math
 import string
+from typing import List
 
 def calculate_rolling_hash(word):
     MOD = 10 ** 9 + 7
@@ -52,7 +53,40 @@ def get_substring_hash(l: int, r: int, prefix_hashes, p_powers, mod: int = 10 **
 
 ################## ----------------- ##################
 
-        
+
+
+
+def rabin_karp(pattern: str, text: str) -> List[int]:
+    prime_base = 31
+    mod = int(1e9 + 9)
+    pattern_len, text_len = len(pattern), len(text)
+
+    # Precompute powers of prime_base modulo mod
+    prime_powers = [1] * max(pattern_len, text_len)
+    for i in range(1, len(prime_powers)):
+        prime_powers[i] = (prime_powers[i - 1] * prime_base) % mod
+
+    # Compute prefix hashes for the text
+    text_hashes = [0] * (text_len + 1)
+    for i in range(text_len):
+        text_hashes[i + 1] = (text_hashes[i] + (ord(text[i]) - ord('a') + 1) * prime_powers[i]) % mod
+
+    # Compute the hash for the pattern
+    pattern_hash = 0
+    for i in range(pattern_len):
+        pattern_hash = (pattern_hash + (ord(pattern[i]) - ord('a') + 1) * prime_powers[i]) % mod
+
+    occurrences = []
+    for i in range(text_len - pattern_len + 1):
+        # Get current substring hash
+        current_hash = (text_hashes[i + pattern_len] - text_hashes[i] + mod) % mod
+        # Compare it with the pattern hash
+        # the current_hash need to be multiplied by module inverse of prime_powers[i] to get the correct hash
+        # instead of that we multiply pattern_hash by prime_powers[i] for comparison
+        if current_hash == (pattern_hash * prime_powers[i]) % mod:
+            occurrences.append(i)
+
+    return occurrences
 
 
 
