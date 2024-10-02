@@ -128,3 +128,27 @@ def kmp_search(text: str, pattern: str) -> list:
             else:
                 i += 1
     return result
+
+
+### Z Function
+
+def z_function(s):
+    n = len(s)
+    z = [0] * n  # Initialize the Z-array with zeros
+    l, r = 0, 0  # Initialize the window [l, r]
+
+    for i in range(1, n):
+        if i <= r:
+            # Reuse previous computations to avoid recalculating
+            z[i] = min(r - i + 1, z[i - l])
+
+        # Try to extend the Z[i] value by comparing characters
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+
+        # Update the window if the new Z-box extends beyond r
+        if i + z[i] - 1 > r:
+            l = i
+            r = i + z[i] - 1
+
+    return z
