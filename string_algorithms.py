@@ -2,6 +2,38 @@ import math
 import string
 from typing import List
 
+class RollingHash:
+
+    def __init__(self, s,p = 256, MOD = 10**9 + 7):
+        self.prefix_hashes = None
+        self.powers = None
+        self.p = p
+        self.s = s
+        self.MOD = MOD
+        self.calc_hash()
+
+    def calc_hash(self):
+        n = len(self.s)
+        prefix_hashes = [0] * (n + 1)
+        powers = [1] * (n + 1)
+        p = self.p
+        MOD = self.MOD
+
+        for i in range(1, n + 1):
+            powers[i] = (powers[i - 1] * p) % MOD
+
+        for i in range(n):
+            prefix_hashes[i + 1] = (prefix_hashes[i] + (ord(self.s[i]) - ord('a') + 1) * powers[i]) % MOD
+
+        self.prefix_hashes = prefix_hashes
+        self.powers = powers
+
+    def get_substring_hash(self, l, r):
+        mod = self.MOD
+        hash_value = (self.prefix_hashes[r + 1] - self.prefix_hashes[l] + mod) % mod
+        return (hash_value * pow(self.powers[l], mod - 2, mod)) % mod
+
+
 def calculate_rolling_hash(word):
     MOD = 10 ** 9 + 7
     P = 256
