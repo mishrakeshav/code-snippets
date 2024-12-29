@@ -184,3 +184,18 @@ def z_function(s):
             r = i + z[i] - 1
 
     return z
+
+
+def check_lexicographically_largest(s1, s2):
+    """
+    checks if s1 is lexicographically larger than s2
+    :param s1:
+    :param s2:
+    :return:
+    """
+    for idx in range(min(len(s1), len(s2))):
+        if s1[idx] > s2[idx]:
+            return True
+        elif s1[idx] < s2[idx]:
+            return False
+    return len(s1) > len(s2)
