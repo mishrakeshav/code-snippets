@@ -96,3 +96,11 @@ primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67
             701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797,
             809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887,
             907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997]
+
+
+
+"""
+Bézout's identity—Let a and b be integers with greatest common divisor d. 
+Then there exist integers x and y such that ax + by = d. 
+Moreover, the integers of the form az + bt are exactly the multiples of d.
+"""

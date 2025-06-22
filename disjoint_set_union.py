@@ -1,26 +1,26 @@
-import collections
-
-
 class UnionFind:
-    def __init__(self):
-        self.parent = collections.defaultdict(lambda: None)
-        self.depth = collections.defaultdict(lambda: 1)
-
-    def find_set(self, v):
-        if self.parent[v] == None:
-            self.parent[v] = v
-        if self.parent[v] == v:
-            return v
-        self.parent[v] = self.find_set(self.parent[v])
-        return self.parent[v]
-
-    def union_sets(self, a, b):
-        a = self.find_set(a)
-        b = self.find_set(b)
-        if a == b:
-            return False
-        if self.depth[a] > self.depth[b]:
-            a, b = b, a
-        self.parent[a] = b
-        self.depth[b] += self.depth[a]
-        return True
+    def __init__(self, size):
+        # Initialize parent and rank arrays
+        self.parent = [i for i in range(size)]  # Each node is initially its own parent
+        self.rank = [0] * size  # Rank is used to keep track of tree depth
+    
+    def find(self, x):
+        # Path compression optimization
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # Recursively find the root and compress the path
+        return self.parent[x]
+    
+    def union(self, x, y):
+        # Find roots of the elements
+        root_x = self.find(x)
+        root_y = self.find(y)
+        
+        if root_x != root_y:
+            # Union by rank optimization
+            if self.rank[root_x] > self.rank[root_y]:
+                self.parent[root_y] = root_x
+            elif self.rank[root_x] < self.rank[root_y]:
+                self.parent[root_x] = root_y
+            else:
+                self.parent[root_y] = root_x
+                self.rank[root_x] += 1
