@@ -121,47 +121,6 @@ def rabin_karp(pattern: str, text: str) -> List[int]:
     return occurrences
 
 
-##### KMP Algorithm #####
-
-
-def prefix_function(s):
-    n = len(s)
-    pi = [0 for i in range(n)]
-
-    for i in range(1,n):
-        j = pi[i-1]
-        while j > 0 and s[i] != s[j]:
-            j = pi[j-1]
-        if s[i] == s[j]:
-            j += 1
-        pi[i] = j
-    return pi
-
-
-def kmp_search(text: str, pattern: str) -> list:
-    n, m = len(text), len(pattern)
-    lps = prefix_function(pattern)
-    i = 0  # index for text
-    j = 0  # index for pattern
-    result = []  # to store the starting indices of matches
-
-    while i < n:
-        if text[i] == pattern[j]:
-            i += 1
-            j += 1
-
-        if j == m:
-            result.append(i - j)  # found a match, record the starting index
-            j = lps[j - 1]  # continue to check for more matches
-
-        elif i < n and text[i] != pattern[j]:
-            if j != 0:
-                j = lps[j - 1]
-            else:
-                i += 1
-    return result
-
-
 ### Z Function
 
 def z_function(s):
